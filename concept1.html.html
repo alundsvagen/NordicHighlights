@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVENT — HIGHLIGHTS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,800;0,900;1,900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black:#111;
+  --grey-bg:#f7f7f7;
+  --grey-dark:#e2e2e2;
+  --grey-mid:#d0d0d0;
+  --grey-light:#888;
+  --green:#00ff99;
+  --font:'Barlow Condensed',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--grey-bg);
+  color:var(--black);
+  font-family:var(--font);
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+
+/* TICKER */
+.ticker-wrap{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:200;
+  background:var(--black);
+  height:34px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+.ticker-track{
+  display:flex;
+  animation:ticker 20s linear infinite;
+  white-space:nowrap;
+}
+.ticker-track span{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.2em;
+  color:#f7f7f7;
+  padding:0 40px;
+}
+.ticker-track span.dot{color:var(--green);padding:0;}
+@keyframes ticker{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:34px;left:0;right:0;
+  padding:20px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(247,247,247,.96);
+  border-bottom:1px solid var(--grey-dark);
+  z-index:100;
+}
+nav a{color:var(--black);text-decoration:none;font-weight:900;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{font-size:13px;letter-spacing:.15em;opacity:.5;transition:opacity .15s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{background:var(--green);padding:10px 20px;opacity:1!important;}
+
+/* SECTIONS */
+section{padding:120px 48px;border-bottom:1px solid var(--grey-dark);}
+h1,h2{font-weight:900;line-height:.9;}
+.label{font-size:11px;letter-spacing:.2em;margin-bottom:16px;display:block;color:var(--black);}
+
+/* HERO */
+#hero{
+  position:relative;
+  min-height:100vh;
+  margin-top:74px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:80px 48px 60px;
+}
+.hero-img{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+.hero-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(.38);
+}
+.hero-img-fallback{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,#111,#2a2a2a);
+}
+.hero-content{position:relative;z-index:2;}
+.hero-eyebrow{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.3em;
+  color:rgba(247,247,247,.5);
+  margin-bottom:20px;
+  display:block;
+  animation:fadeUp .6s ease both;
+}
+#hero h1{
+  font-size:clamp(68px,11vw,180px);
+  color:#f7f7f7;
+  animation:fadeUp .7s ease both .1s;
+}
+#hero h1 .accent{color:var(--green);}
+.hero-sub-row{
+  margin-top:32px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:40px;
+  flex-wrap:wrap;
+  animation:fadeUp .7s ease both .22s;
+}
+.hero-desc{
+  font-size:17px;
+  font-weight:800;
+  line-height:1.5;
+  color:rgba(247,247,247,.7);
+  max-width:500px;
+  text-transform:none;
+  letter-spacing:0;
+}
+.hero-meta{text-align:right;flex-shrink:0;}
+.hero-meta .date{font-size:20px;font-weight:900;letter-spacing:.1em;color:#f7f7f7;}
+.hero-meta .location{font-size:12px;font-weight:900;letter-spacing:.2em;color:rgba(247,247,247,.4);margin-top:4px;}
+.hero-cta-row{
+  margin-top:36px;
+  display:flex;
+  gap:16px;
+  align-items:center;
+  flex-wrap:wrap;
+  animation:fadeUp .7s ease both .34s;
+}
+.btn{
+  display:inline-block;
+  background:var(--green);
+  padding:16px 32px;
+  font-weight:900;
+  text-decoration:none;
+  color:var(--black);
+  transition:opacity .15s;
+}
+.btn:hover{opacity:.85;}
+.btn-outline{
+  display:inline-block;
+  border:2px solid rgba(247,247,247,.35);
+  padding:14px 28px;
+  font-weight:900;
+  text-decoration:none;
+  color:#f7f7f7;
+  transition:border-color .15s;
+}
+.btn-outline:hover{border-color:#f7f7f7;}
+.seats-left{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.15em;
+  color:rgba(247,247,247,.4);
+}
+.blink{animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* STAT STRIP */
+.stat-strip{
+  background:var(--black);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.stat-item{
+  padding:40px 48px;
+  border-right:1px solid #1e1e1e;
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  font-size:clamp(40px,5vw,72px);
+  font-weight:900;
+  line-height:1;
+  color:var(--green);
+}
+.stat-label{
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.2em;
+  color:#444;
+  margin-top:8px;
+}
+
+/* STORY / MANIFESTO */
+#story{background:var(--grey-bg);}
+.story-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:start;
+}
+.story-grid h2{font-size:clamp(44px,6vw,88px);line-height:.9;}
+.story-right{padding-top:8px;}
+.story-block{margin-bottom:36px;}
+.story-block h3{font-size:28px;margin-bottom:10px;}
+.story-block p{text-transform:none;color:var(--grey-light);line-height:1.6;letter-spacing:0;font-size:16px;}
+.story-block p.big{
+  text-transform:uppercase;
+  color:var(--black);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:.02em;
+  line-height:1.2;
+}
+
+/* WHO */
+#who{}
+.who-headline{
+  font-size:clamp(40px,6vw,88px);
+  font-weight:900;
+  line-height:.92;
+  max-width:900px;
+  margin-bottom:60px;
+}
+.who-headline .accent{color:var(--green);}
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.who-card{
+  background:#ebebeb;
+  padding:48px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.who-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:3px;height:0;
+  background:var(--green);
+  transition:height .4s ease;
+}
+.who-card:hover::before{height:100%;}
+.who-card-num{
+  font-size:56px;
+  font-weight:900;
+  color:var(--grey-dark);
+  line-height:1;
+  margin-bottom:14px;
+}
+.who-card h3{font-size:26px;font-weight:900;margin-bottom:12px;}
+.who-card p{text-transform:none;color:var(--grey-light);line-height:1.6;letter-spacing:0;font-size:15px;}
+
+/* SUPPORTING IMAGE */
+.img-break{
+  height:clamp(340px,50vw,620px);
+  overflow:hidden;
+  position:relative;
+  border-bottom:1px solid var(--grey-dark);
+}
+.img-break img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(.55);
+}
+.img-break-fallback{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,#111,#2d2d2d);
+}
+.img-overlay-text{
+  position:absolute;
+  bottom:48px;left:48px;right:48px;
+  font-size:clamp(28px,5vw,72px);
+  font-weight:900;
+  color:#f7f7f7;
+  line-height:.9;
+  pointer-events:none;
+}
+.img-overlay-text .accent{color:var(--green);}
+
+/* SOCIAL PROOF */
+#social-proof{background:var(--grey-bg);}
+.proof-headline{
+  font-size:clamp(40px,5.5vw,80px);
+  font-weight:900;
+  line-height:.92;
+  max-width:800px;
+  margin-bottom:60px;
+}
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.testimonial{background:#ebebeb;padding:48px 40px;}
+.testimonial blockquote{
+  text-transform:none;
+  letter-spacing:0;
+  font-size:17px;
+  font-weight:800;
+  line-height:1.55;
+  color:var(--black);
+  margin-bottom:20px;
+}
+.testimonial .author{font-size:12px;color:var(--grey-light);margin-top:4px;}
+.testimonial .author-name{font-size:14px;font-weight:900;color:var(--black);}
+
+/* AGENDA */
+#agenda{}
+.agenda-headline{
+  font-size:clamp(40px,5vw,72px);
+  font-weight:900;
+  line-height:.92;
+  margin-bottom:48px;
+}
+.agenda-list{border-top:2px solid var(--black);}
+.agenda-item{
+  display:grid;
+  grid-template-columns:110px 1fr auto;
+  gap:32px;
+  align-items:center;
+  padding:24px 0;
+  border-bottom:1px solid var(--grey-dark);
+}
+.agenda-time{font-size:13px;font-weight:900;letter-spacing:.15em;color:var(--grey-light);}
+.agenda-title{font-size:20px;font-weight:900;}
+.agenda-tag{
+  font-size:11px;font-weight:900;letter-spacing:.2em;
+  background:var(--black);color:var(--green);
+  padding:6px 14px;white-space:nowrap;
+}
+
+/* FINAL CTA */
+#tickets{
+  background:var(--black);
+  color:#f7f7f7;
+  text-align:center;
+  padding:140px 48px;
+  border:none;
+}
+.cta-pre{
+  font-size:12px;font-weight:900;letter-spacing:.35em;
+  color:#444;margin-bottom:28px;display:block;
+}
+#tickets h2{
+  font-size:clamp(56px,9vw,150px);
+  line-height:.88;
+  max-width:1100px;
+  margin:0 auto 20px;
+}
+#tickets h2 .accent{color:var(--green);}
+.cta-sub{
+  font-size:16px;
+  text-transform:none;
+  letter-spacing:0;
+  color:#555;
+  margin:0 auto 52px;
+  max-width:480px;
+  line-height:1.6;
+  font-weight:800;
+}
+.btn-cta{
+  display:inline-block;
+  background:var(--green);
+  color:var(--black);
+  padding:20px 56px;
+  font-size:18px;
+  font-weight:900;
+  text-decoration:none;
+  letter-spacing:.1em;
+  transition:opacity .15s;
+}
+.btn-cta:hover{opacity:.85;}
+.urgency{
+  margin-top:32px;
+  font-size:12px;font-weight:900;letter-spacing:.2em;color:#333;
+}
+
+/* FOOTER */
+footer{
+  background:var(--black);
+  padding:36px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid #1a1a1a;
+}
+footer .logo{font-size:18px;font-weight:900;letter-spacing:.1em;color:#f7f7f7;}
+footer .copy{font-size:11px;font-weight:900;letter-spacing:.2em;color:#2a2a2a;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:960px){
+  nav{padding:16px 24px;}
+  section{padding:72px 24px;}
+  #hero{padding:60px 24px 48px;}
+  .story-grid{grid-template-columns:1fr;gap:40px;}
+  .who-grid{grid-template-columns:1fr;}
+  .testimonials{grid-template-columns:1fr;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .stat-item{border-bottom:1px solid #1e1e1e;}
+  .agenda-item{grid-template-columns:1fr;gap:8px;padding:20px 0;}
+  .img-overlay-text{bottom:28px;left:24px;right:24px;}
+  #tickets{padding:80px 24px;}
+  footer{flex-direction:column;gap:12px;padding:28px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>HIGHLIGHTS SUMMIT 2025</span><span class="dot">·</span>
+    <span>EUROPE'S FINTECH EVENT</span><span class="dot">·</span>
+    <span>HELSINKI — MAY 14–15</span><span class="dot">·</span>
+    <span>2,000+ LEADERS IN THE ROOM</span><span class="dot">·</span>
+    <span>137 SEATS LEFT</span><span class="dot">·</span>
+    <span>BUYERS. SELLERS. BUILDERS.</span><span class="dot">·</span>
+    <span>€4B+ CAPITAL ATTENDING</span><span class="dot">·</span>
+    <span>HIGHLIGHTS SUMMIT 2025</span><span class="dot">·</span>
+    <span>EUROPE'S FINTECH EVENT</span><span class="dot">·</span>
+    <span>HELSINKI — MAY 20–15</span><span class="dot">·</span>
+    <span>2,000+ LEADERS IN THE ROOM</span><span class="dot">·</span>
+    <span>137 SEATS LEFT</span><span class="dot">·</span>
+    <span>BUYERS. SELLERS. BUILDERS.</span><span class="dot">·</span>
+    <span>€4B+ CAPITAL ATTENDING</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" style="font-size:20px;letter-spacing:.1em;">HIGHLIGHTS</a>
+  <div class="nav-links">
+    <a href="#who">Who's In</a>
+    <a href="#social-proof">Proof</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#tickets" class="nav-cta">Get Tickets</a>
+  </div>
+</nav>
+
+<!-- HERO — 1.jpg splash -->
+<section id="hero">
+  <div class="hero-img">
+    <img src="1.jpg" alt="HIGHLIGHTS Summit" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=hero-img-fallback></div>'">
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">HELSINKI · MAY 20–15, 2025 · The Only Room That Matters</span>
+    <h1>EVERY<br>DEAL IN<br>EUROPE<br><span class="accent">STARTS HERE.</span></h1>
+    <div class="hero-sub-row">
+      <p class="hero-desc">2,000 decision-makers. Zero bullshit. The buyers are in. The sellers are in. The people who actually move money across Europe — in one room, for two days. Are you?</p>
+      <div class="hero-meta">
+        <div class="date">MAY 20–15, 2025</div>
+        <div class="location">HELSINKI, Germany</div>
+      </div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#tickets" class="btn">Claim Your Seat</a>
+      <a href="#who" class="btn-outline">See Who's Coming</a>
+      <span class="seats-left"><span class="blink">●</span>&nbsp; 137 seats remaining</span>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-item">
+    <div class="stat-num">2,000+</div>
+    <div class="stat-label">Attendees</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">€4B+</div>
+    <div class="stat-label">Capital In The Room</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">60+</div>
+    <div class="stat-label">Countries Represented</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">1</div>
+    <div class="stat-label">Event You Cannot Miss</div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section id="story">
+  <span class="label">00 — Why This Exists</span>
+  <div class="story-grid">
+    <div>
+      <h2>TIRED OF<br>CONFERENCES<br>THAT WASTE<br>YOUR DAMN<br>TIME?</h2>
+    </div>
+    <div class="story-right">
+      <div class="story-block">
+        <p class="big">So were we. So we burned the format down.</p>
+      </div>
+      <div class="story-block">
+        <p>No filler panels. No recycled decks. No "networking lunch" where you eat lukewarm food and collect business cards you'll never look at again.</p>
+      </div>
+      <div class="story-block">
+        <p>HIGHLIGHTS Summit is built for the people actually building the future of European finance — not the ones who write about it.</p>
+      </div>
+      <div class="story-block">
+        <p>If you're here to be seen — wrong event. If you're here to <em>close</em> — welcome home.</p>
+      </div>
+      <div class="story-block">
+        <p>The conversations that shape this industry don't happen on Twitter. They happen in rooms. This is the room.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO'S IN -->
+<section id="who">
+  <span class="label">01 — Who's In The Room</span>
+  <h2 class="who-headline">THE PEOPLE<br>WHO RUN<br>EUROPEAN FINANCE<br><span class="accent">ARE COMING.</span></h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-card-num">01</div>
+      <h3>The Buyers</h3>
+      <p>VCs, PEs, family offices, and corporate M&A with real mandates and real money. Not lookers. Not advisors. Decision-makers. They're here because the deals are here.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-num">02</div>
+      <h3>The Sellers</h3>
+      <p>Founders and operators who've built something worth knowing about. They don't do endless roadshows. They come to HIGHLIGHTS Summit and let the room come to them.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-num">03</div>
+      <h3>The Builders</h3>
+      <p>Engineers, product leads, and operators turning fintech from pitch slides into reality. The people doing the work the rest of the industry just talks about.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2.jpg SUPPORTING IMAGE -->
+<div class="img-break">
+  <img src="2.jpg" alt="HIGHLIGHTS Summit" onerror="this.style.display='none';this.parentElement.innerHTML+='<div class=img-break-fallback></div>'">
+  <div class="img-overlay-text">THE ROOM<br>WHERE IT<br><span class="accent">HAPPENS.</span></div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<section id="social-proof">
+  <span class="label">02 — Don't Take Our Word For It</span>
+  <h2 class="proof-headline">PEOPLE WHO<br>WENT LAST YEAR<br>WON'T SHUT UP<br>ABOUT IT.</h2>
+  <div class="testimonials">
+    <div class="testimonial">
+      <blockquote>"Closed our Series B lead in a side room on day one. No other event has ever done that for us. None."</blockquote>
+      <div class="author-name">Tobias Reinholt</div>
+      <div class="author">Founder, Stackr Financial</div>
+    </div>
+    <div class="testimonial">
+      <blockquote>"I've been to Davos. I've been to Money 20/20. HIGHLIGHTS Summit hits different. The density of real decision-makers is unmatched anywhere in Europe."</blockquote>
+      <div class="author-name">Sara Lindqvist</div>
+      <div class="author">Managing Partner, Nordic Ventures</div>
+    </div>
+    <div class="testimonial">
+      <blockquote>"Walked in with a deck. Walked out with three term sheets in my inbox. I'm not even joking. Book your ticket."</blockquote>
+      <div class="author-name">Arjun Mehta</div>
+      <div class="author">CEO, Paytral</div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <span class="label">03 — The Agenda</span>
+  <h2 class="agenda-headline">TWO DAYS.<br>ZERO PADDING.</h2>
+  <div class="agenda-list">
+    <div class="agenda-item">
+      <span class="agenda-time">08:30</span>
+      <span class="agenda-title">Doors Open — Coffee Worth Waking Up For</span>
+      <span class="agenda-tag">Day 1</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">09:30</span>
+      <span class="agenda-title">Opening Keynote: The State of European Fintech</span>
+      <span class="agenda-tag">Keynote</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">11:00</span>
+      <span class="agenda-title">The Deals Room Opens — No Press. No Spectators.</span>
+      <span class="agenda-tag">Closed</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">13:00</span>
+      <span class="agenda-title">Lunch On The Terrace — Where Half The Deals Happen</span>
+      <span class="agenda-tag">Network</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">15:00</span>
+      <span class="agenda-title">Regulation, Risk & Realness — A Frank Conversation</span>
+      <span class="agenda-tag">Panel</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">18:00</span>
+      <span class="agenda-title">The Summit Party — The Night Is Part Of The Deal</span>
+      <span class="agenda-tag">Evening</span>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="tickets">
+  <span class="cta-pre">Last Chance. We Mean It.</span>
+  <h2>MISS THIS<br>AND <span class="accent">YOU'LL</span><br>KNOW.</h2>
+  <p class="cta-sub">The people who matter will be there. The deals that matter will happen there. The only question is whether you're in the room or reading about it afterwards.</p>
+  <a href="#" class="btn-cta">Get Your Ticket Now</a>
+  <p class="urgency"><span class="blink">●</span>&nbsp; 137 tickets remaining — price increases in 6 days</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">HIGHLIGHTS</div>
+  <div class="copy">HELSINKI · MAY 20–21, 2025 · © HIGHLIGHTS 2025</div>
+</footer>
+
+</body>
+</html>
