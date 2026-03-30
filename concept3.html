@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE DATA — HIGHLIGHTS SUMMIT 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,800;0,900;1,900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --black:#111;
+  --grey-bg:#f7f7f7;
+  --grey-dark:#e2e2e2;
+  --grey-mid:#d0d0d0;
+  --grey-light:#888;
+  --green:#00ff99;
+  --font:'Barlow Condensed',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--grey-bg);
+  color:var(--black);
+  font-family:var(--font);
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+
+/* TICKER */
+.ticker-wrap{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--black);height:34px;overflow:hidden;display:flex;align-items:center;}
+.ticker-track{display:flex;animation:ticker 22s linear infinite;white-space:nowrap;}
+.ticker-track span{font-size:12px;font-weight:900;letter-spacing:.2em;color:#f7f7f7;padding:0 40px;}
+.ticker-track span.dot{color:var(--green);padding:0;}
+@keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* NAV */
+nav{position:fixed;top:34px;left:0;right:0;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;background:rgba(247,247,247,.96);border-bottom:1px solid var(--grey-dark);z-index:100;}
+nav a{color:var(--black);text-decoration:none;font-weight:900;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{font-size:13px;letter-spacing:.15em;opacity:.5;transition:opacity .15s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{background:var(--green);padding:10px 20px;opacity:1!important;}
+
+/* SECTIONS */
+section{padding:120px 48px;border-bottom:1px solid var(--grey-dark);}
+h1,h2{font-weight:900;line-height:.9;}
+.label{font-size:11px;letter-spacing:.2em;margin-bottom:16px;display:block;color:var(--black);}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;margin-top:74px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:80px 48px 60px;}
+.hero-img{position:absolute;inset:0;z-index:0;}
+.hero-img img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.3);}
+.hero-img-fallback{width:100%;height:100%;background:linear-gradient(160deg,#111,#2a2a2a);}
+.hero-content{position:relative;z-index:2;}
+.hero-eyebrow{font-size:12px;font-weight:900;letter-spacing:.3em;color:rgba(247,247,247,.5);margin-bottom:20px;display:block;animation:fadeUp .6s ease both;}
+#hero h1{font-size:clamp(60px,10vw,168px);color:#f7f7f7;animation:fadeUp .7s ease both .1s;}
+#hero h1 .accent{color:var(--green);}
+.hero-sub-row{margin-top:32px;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap;animation:fadeUp .7s ease both .22s;}
+.hero-desc{font-size:17px;font-weight:800;line-height:1.5;color:rgba(247,247,247,.7);max-width:540px;text-transform:none;letter-spacing:0;}
+.hero-meta{text-align:right;flex-shrink:0;}
+.hero-meta .date{font-size:20px;font-weight:900;letter-spacing:.1em;color:#f7f7f7;}
+.hero-meta .location{font-size:12px;font-weight:900;letter-spacing:.2em;color:rgba(247,247,247,.4);margin-top:4px;}
+.hero-cta-row{margin-top:36px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;animation:fadeUp .7s ease both .34s;}
+.btn{display:inline-block;background:var(--green);padding:16px 32px;font-weight:900;text-decoration:none;color:var(--black);transition:opacity .15s;}
+.btn:hover{opacity:.85;}
+.btn-outline{display:inline-block;border:2px solid rgba(247,247,247,.35);padding:14px 28px;font-weight:900;text-decoration:none;color:#f7f7f7;transition:border-color .15s;}
+.btn-outline:hover{border-color:#f7f7f7;}
+.seats-left{font-size:12px;font-weight:900;letter-spacing:.15em;color:rgba(247,247,247,.4);}
+.blink{animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* HERO INLINE DATA STRIP */
+.hero-data-strip{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  margin-top:48px;
+  border-top:1px solid rgba(247,247,247,.12);
+  animation:fadeUp .7s ease both .45s;
+}
+.hero-data-item{padding:20px 0 0;border-right:1px solid rgba(247,247,247,.08);}
+.hero-data-item:last-child{border-right:none;}
+.hero-data-num{font-size:clamp(32px,4vw,56px);font-weight:900;color:var(--green);line-height:1;}
+.hero-data-label{font-size:10px;font-weight:900;letter-spacing:.2em;color:rgba(247,247,247,.35);margin-top:6px;}
+.hero-data-change{font-size:11px;font-weight:900;letter-spacing:.1em;color:rgba(247,247,247,.25);margin-top:3px;}
+
+/* STAT STRIP */
+.stat-strip{background:var(--black);display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-item{padding:40px 48px;border-right:1px solid #333;}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-size:clamp(40px,5vw,72px);font-weight:900;line-height:1;color:var(--green);}
+.stat-label{font-size:11px;font-weight:900;letter-spacing:.2em;color:#aaa;margin-top:8px;}
+
+/* CHART SECTIONS */
+.chart-intro{margin-bottom:56px;}
+.chart-intro h2{font-size:clamp(44px,6vw,88px);line-height:.9;margin-bottom:20px;}
+.chart-intro .sub{font-size:16px;font-weight:800;text-transform:none;letter-spacing:0;color:var(--grey-light);line-height:1.5;max-width:640px;}
+.chart-intro .accent{color:var(--green);}
+
+/* SINGLE CHART FULL */
+.chart-full{
+  background:var(--black);
+  border:1px solid #222;
+  padding:48px;
+  margin-bottom:2px;
+}
+.chart-full-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:36px;flex-wrap:wrap;gap:16px;}
+.chart-full-title{font-size:22px;font-weight:900;color:#f7f7f7;}
+.chart-full-sub{font-size:11px;font-weight:900;letter-spacing:.15em;color:#aaa;margin-top:6px;}
+.chart-full-badge{background:var(--green);color:var(--black);font-size:11px;font-weight:900;letter-spacing:.15em;padding:6px 14px;white-space:nowrap;align-self:flex-start;}
+.chart-container{position:relative;width:100%;}
+
+/* CHART 2-COL GRID */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
+.chart-card{background:var(--black);border:1px solid #222;padding:40px;}
+.chart-card-header{margin-bottom:28px;}
+.chart-card-title{font-size:18px;font-weight:900;color:#f7f7f7;}
+.chart-card-sub{font-size:10px;font-weight:900;letter-spacing:.18em;color:#aaa;margin-top:5px;}
+.chart-card-badge{display:inline-block;margin-top:10px;background:rgba(0,255,153,.12);border:1px solid rgba(0,255,153,.3);color:var(--green);font-size:10px;font-weight:900;letter-spacing:.15em;padding:4px 10px;}
+
+/* FOMO CALLOUT */
+.fomo-strip{
+  background:var(--green);
+  padding:56px 48px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:48px;
+  border-bottom:1px solid var(--grey-dark);
+}
+.fomo-strip h2{font-size:clamp(36px,5vw,72px);font-weight:900;line-height:.9;color:var(--black);}
+.fomo-strip .fomo-right{text-align:right;}
+.fomo-strip .fomo-right p{font-size:15px;font-weight:800;text-transform:none;letter-spacing:0;color:rgba(0,0,0,.6);max-width:380px;line-height:1.5;margin-bottom:20px;}
+.btn-dark{display:inline-block;background:var(--black);color:var(--green);padding:16px 32px;font-weight:900;text-decoration:none;transition:opacity .15s;}
+.btn-dark:hover{opacity:.8;}
+
+/* AI SHIFT — 3 COL METRICS */
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px;}
+.metric-card{
+  background:#ebebeb;
+  padding:48px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.metric-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--green);transition:height .4s ease;}
+.metric-card:hover::before{height:100%;}
+.metric-num{font-size:clamp(44px,5vw,72px);font-weight:900;line-height:1;color:var(--black);}
+.metric-num .accent{color:var(--green);}
+.metric-label{font-size:11px;font-weight:900;letter-spacing:.2em;color:var(--grey-light);margin-top:10px;}
+.metric-desc{font-size:14px;font-weight:800;text-transform:none;letter-spacing:0;color:var(--grey-light);line-height:1.55;margin-top:14px;}
+.metric-delta{font-size:12px;font-weight:900;letter-spacing:.1em;color:var(--green);margin-top:10px;}
+
+/* SPLIT IMAGE BLOCK */
+.split-block{display:grid;grid-template-columns:1fr 1fr;min-height:480px;border-bottom:1px solid var(--grey-dark);}
+.split-img{overflow:hidden;position:relative;}
+.split-img img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.65);transition:transform .6s ease;}
+.split-img:hover img{transform:scale(1.03);}
+.split-text{background:var(--black);padding:80px 64px;display:flex;flex-direction:column;justify-content:center;}
+.split-text .label{color:#aaa;}
+.split-text h2{font-size:clamp(36px,4vw,64px);font-weight:900;line-height:.92;color:#f7f7f7;margin-bottom:28px;}
+.split-text h2 .accent{color:var(--green);}
+.split-text p{text-transform:none;letter-spacing:0;font-size:16px;font-weight:800;color:#999;line-height:1.6;max-width:420px;}
+
+/* COUNTDOWN / URGENCY BANNER */
+.urgency-banner{
+  background:var(--black);
+  padding:32px 48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+  flex-wrap:wrap;
+  border-bottom:1px solid #333;
+}
+.urgency-left{display:flex;align-items:center;gap:20px;}
+.urgency-dot{width:10px;height:10px;background:var(--green);border-radius:50%;animation:blink 1.2s step-end infinite;flex-shrink:0;}
+.urgency-text{font-size:13px;font-weight:900;letter-spacing:.2em;color:#aaa;}
+.urgency-seats{font-size:clamp(28px,4vw,52px);font-weight:900;color:var(--green);letter-spacing:.05em;}
+.urgency-seats span{font-size:13px;font-weight:900;letter-spacing:.2em;color:#aaa;vertical-align:middle;margin-left:8px;}
+
+/* WHO */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.who-card{background:#ebebeb;padding:48px 40px;position:relative;overflow:hidden;}
+.who-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--green);transition:height .4s ease;}
+.who-card:hover::before{height:100%;}
+.who-card-num{font-size:56px;font-weight:900;color:var(--grey-dark);line-height:1;margin-bottom:14px;}
+.who-card h3{font-size:26px;font-weight:900;margin-bottom:12px;}
+.who-card p{text-transform:none;color:var(--grey-light);line-height:1.6;letter-spacing:0;font-size:15px;}
+
+/* AGENDA */
+.agenda-list{border-top:2px solid var(--black);}
+.agenda-item{display:grid;grid-template-columns:110px 1fr auto;gap:32px;align-items:center;padding:24px 0;border-bottom:1px solid var(--grey-dark);}
+.agenda-time{font-size:13px;font-weight:900;letter-spacing:.15em;color:var(--grey-light);}
+.agenda-title{font-size:20px;font-weight:900;}
+.agenda-tag{font-size:11px;font-weight:900;letter-spacing:.2em;background:var(--black);color:var(--green);padding:6px 14px;white-space:nowrap;}
+
+/* FINAL CTA */
+#tickets{background:var(--black);color:#f7f7f7;text-align:center;padding:140px 48px;border:none;}
+.cta-pre{font-size:12px;font-weight:900;letter-spacing:.35em;color:#aaa;margin-bottom:28px;display:block;}
+#tickets h2{font-size:clamp(56px,9vw,150px);line-height:.88;max-width:1100px;margin:0 auto 20px;}
+#tickets h2 .accent{color:var(--green);}
+.cta-sub{font-size:16px;text-transform:none;letter-spacing:0;color:#999;margin:0 auto 52px;max-width:480px;line-height:1.6;font-weight:800;}
+.btn-cta{display:inline-block;background:var(--green);color:var(--black);padding:20px 56px;font-size:18px;font-weight:900;text-decoration:none;letter-spacing:.1em;transition:opacity .15s;}
+.btn-cta:hover{opacity:.85;}
+.cta-urgency{margin-top:32px;font-size:12px;font-weight:900;letter-spacing:.2em;color:#aaa;}
+
+/* FOOTER */
+footer{background:var(--black);padding:36px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #333;}
+footer .logo{font-size:18px;font-weight:900;letter-spacing:.1em;color:#f7f7f7;}
+footer .copy{font-size:11px;font-weight:900;letter-spacing:.2em;color:#777;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:960px){
+  nav{padding:16px 24px;}
+  section{padding:72px 24px;}
+  #hero{padding:60px 24px 48px;}
+  .chart-grid{grid-template-columns:1fr;}
+  .metric-grid{grid-template-columns:1fr;}
+  .who-grid{grid-template-columns:1fr;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .stat-item{border-bottom:1px solid #333;}
+  .agenda-item{grid-template-columns:1fr;gap:8px;padding:20px 0;}
+  .fomo-strip{grid-template-columns:1fr;}
+  .fomo-strip .fomo-right{text-align:left;}
+  .split-block{grid-template-columns:1fr;}
+  .split-text{padding:60px 24px;}
+  .hero-data-strip{grid-template-columns:1fr 1fr;}
+  .urgency-banner{flex-direction:column;align-items:flex-start;}
+  #tickets{padding:80px 24px;}
+  footer{flex-direction:column;gap:12px;padding:28px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>HIGHLIGHTS SUMMIT 2025</span><span class="dot">·</span>
+    <span>FINTECH CAPITAL FLOWS UP 340% IN 3 YRS</span><span class="dot">·</span>
+    <span>AI ADOPTION IN FINANCE: 67% YOY GROWTH</span><span class="dot">·</span>
+    <span>NORDIC FINTECH OUTPERFORMS EUROPE BY 2.4×</span><span class="dot">·</span>
+    <span>137 SEATS LEFT</span><span class="dot">·</span>
+    <span>€4B+ CAPITAL IN THE ROOM</span><span class="dot">·</span>
+    <span>HELSINKI — MAY 20–21, 2025</span><span class="dot">·</span>
+    <span>HIGHLIGHTS SUMMIT 2025</span><span class="dot">·</span>
+    <span>FINTECH CAPITAL FLOWS UP 340% IN 3 YRS</span><span class="dot">·</span>
+    <span>AI ADOPTION IN FINANCE: 67% YOY GROWTH</span><span class="dot">·</span>
+    <span>NORDIC FINTECH OUTPERFORMS EUROPE BY 2.4×</span><span class="dot">·</span>
+    <span>137 SEATS LEFT</span><span class="dot">·</span>
+    <span>€4B+ CAPITAL IN THE ROOM</span><span class="dot">·</span>
+    <span>HELSINKI — MAY 20–21, 2025</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" style="font-size:20px;letter-spacing:.1em;">HIGHLIGHTS</a>
+  <div class="nav-links">
+    <a href="#capital">Capital</a>
+    <a href="#ai">AI Shift</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#tickets" class="nav-cta">Get Tickets</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img">
+    <img src="5.jpg" alt="HIGHLIGHTS Summit" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=hero-img-fallback></div>'">
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">HELSINKI · MAY 20–21, 2025 · The Numbers Don't Lie</span>
+    <h1>THE MARKET<br>ISN'T<br>WAITING<br><span class="accent">FOR YOU.</span></h1>
+    <div class="hero-sub-row">
+      <p class="hero-desc">€340B in new fintech capital deployed in the last 36 months. AI reshaping every function in financial services. The gap between those who know and those who don't is widening by the quarter. The data is in. Are you?</p>
+      <div class="hero-meta">
+        <div class="date">MAY 20–21, 2025</div>
+        <div class="location">HELSINKI, FINLAND</div>
+      </div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#tickets" class="btn">Get In The Room</a>
+      <a href="#capital" class="btn-outline">See The Data</a>
+      <span class="seats-left"><span class="blink">●</span>&nbsp; 137 seats remaining</span>
+    </div>
+    <!-- INLINE HERO STATS -->
+    <div class="hero-data-strip">
+      <div class="hero-data-item">
+        <div class="hero-data-num">+340%</div>
+        <div class="hero-data-label">Fintech Capital Growth · 3 Years</div>
+        <div class="hero-data-change">↑ vs. global avg +89%</div>
+      </div>
+      <div class="hero-data-item">
+        <div class="hero-data-num">67%</div>
+        <div class="hero-data-label">AI Adoption in Finance · YOY</div>
+        <div class="hero-data-change">↑ from 23% in 2022</div>
+      </div>
+      <div class="hero-data-item">
+        <div class="hero-data-num">2.4×</div>
+        <div class="hero-data-label">Nordic Fintech vs. EU Average</div>
+        <div class="hero-data-change">↑ outperformance ratio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-item">
+    <div class="stat-num">€340B</div>
+    <div class="stat-label">Fintech Capital Deployed Since 2022</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">83%</div>
+    <div class="stat-label">Of Top Deals Closed Via Warm Intros</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4.1×</div>
+    <div class="stat-label">ROI — AI-Enabled vs. Legacy Firms</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">6 Mo</div>
+    <div class="stat-label">Average Time-to-Deal In The Room</div>
+  </div>
+</div>
+
+<!-- SECTION: CAPITAL FLOWS -->
+<section id="capital">
+  <span class="label">01 — Capital Markets</span>
+  <div class="chart-intro">
+    <h2>THE CAPITAL IS<br>MOVING. THE QUESTION<br>IS <span class="accent">WHETHER YOU</span><br>KNOW WHERE.</h2>
+    <p class="sub">European fintech investment has tripled in three years. But it's not flowing evenly — it's concentrating into the hands of operators and investors who are already in the right rooms. Miss the intel, miss the allocation.</p>
+  </div>
+
+  <!-- CHART 1: FULL-WIDTH — Fintech Capital Flows -->
+  <div class="chart-full">
+    <div class="chart-full-header">
+      <div>
+        <div class="chart-full-title">European Fintech Capital Deployment (€B)</div>
+        <div class="chart-full-sub">Annual investment flows across payments, lending, wealthtech & infrastructure · 2019–2025E</div>
+      </div>
+      <div class="chart-full-badge">↑ 340% since 2022</div>
+    </div>
+    <div class="chart-container" style="height:320px;">
+      <canvas id="capitalChart"></canvas>
+    </div>
+  </div>
+
+  <!-- CHART 2: TWO-COL -->
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div class="chart-card-title">Nordic vs. Eurozone Deal Volume</div>
+        <div class="chart-card-sub">Number of fintech transactions · 2020–2024</div>
+        <div class="chart-card-badge">↑ Nordic outperforms 2.4×</div>
+      </div>
+      <div class="chart-container" style="height:260px;">
+        <canvas id="nordicChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div class="chart-card-title">Capital Concentration By Sector</div>
+        <div class="chart-card-sub">Share of total European fintech investment · 2024</div>
+        <div class="chart-card-badge">Infra + AI = 61% of all flow</div>
+      </div>
+      <div class="chart-container" style="height:260px;">
+        <canvas id="sectorChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOMO CALLOUT 1 -->
+<div class="fomo-strip">
+  <h2>83% OF DEALS<br>NEVER HIT<br>A PLATFORM.</h2>
+  <div class="fomo-right">
+    <p>The best transactions in European fintech are closed before they're announced. They happen in rooms. Warm introductions. Trusted networks. If you're not in the room, you're not in the deal.</p>
+    <a href="#tickets" class="btn-dark">Get In The Room</a>
+  </div>
+</div>
+
+<!-- SECTION: AI SHIFT -->
+<section id="ai">
+  <span class="label">02 — The AI Shift</span>
+  <div class="chart-intro">
+    <h2>AI ISN'T COMING<br>TO FINTECH.<br><span class="accent">IT'S ALREADY</span><br>RUNNING IT.</h2>
+    <p class="sub">Firms that deployed AI-first strategies in 2022–23 are now delivering 4× the returns of their legacy counterparts. The window to adopt isn't closing — it closed. Now it's about catching up or being left behind permanently.</p>
+  </div>
+
+  <!-- CHART 3: FULL-WIDTH — AI Adoption curve -->
+  <div class="chart-full">
+    <div class="chart-full-header">
+      <div>
+        <div class="chart-full-title">AI Adoption in Financial Services — Function by Function (%)</div>
+        <div class="chart-full-sub">Percentage of firms with active deployment across key functions · 2021–2025E</div>
+      </div>
+      <div class="chart-full-badge">↑ 67% YOY Average Growth</div>
+    </div>
+    <div class="chart-container" style="height:320px;">
+      <canvas id="aiAdoptionChart"></canvas>
+    </div>
+  </div>
+
+  <!-- METRIC CARDS -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-num">4.1<span class="accent">×</span></div>
+      <div class="metric-label">ROI Differential</div>
+      <div class="metric-desc">AI-native financial firms are generating 4.1× the return on invested capital compared to legacy-model peers operating equivalent asset books.</div>
+      <div class="metric-delta">↑ From 1.8× in 2022</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">€<span class="accent">2.1B</span></div>
+      <div class="metric-label">Annual Cost Savings — Top-10 EU Banks</div>
+      <div class="metric-desc">AI-driven automation across compliance, credit decisioning, and customer operations has unlocked €2.1B in annual savings in the top 10 European banks alone.</div>
+      <div class="metric-delta">↑ 89% YOY increase</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">78<span class="accent">%</span></div>
+      <div class="metric-label">Execs Who Feel Behind on AI</div>
+      <div class="metric-desc">78% of senior financial executives surveyed in Q1 2025 say their organisation's AI strategy is 12+ months behind where it needs to be. The gap is felt. Few know how to close it.</div>
+      <div class="metric-delta">↑ Up from 54% in 2023</div>
+    </div>
+  </div>
+
+  <!-- CHART 4: TWO-COL -->
+  <div class="chart-grid" style="margin-top:2px;">
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div class="chart-card-title">AI vs. Legacy Firm Performance</div>
+        <div class="chart-card-sub">Indexed ROIC · AI-native vs. Legacy · 2020–2025E</div>
+        <div class="chart-card-badge">Gap widens every quarter</div>
+      </div>
+      <div class="chart-container" style="height:260px;">
+        <canvas id="aiRoicChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div class="chart-card-title">Where AI Budget Is Going in 2025</div>
+        <div class="chart-card-sub">Planned fintech AI investment by category · €M · 2025 forecast</div>
+        <div class="chart-card-badge">Risk + compliance = #1 priority</div>
+      </div>
+      <div class="chart-container" style="height:260px;">
+        <canvas id="aiBudgetChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT IMAGE BLOCK — 6.jpg -->
+<div class="split-block">
+  <div class="split-text">
+    <span class="label">The Intelligence Gap</span>
+    <h2>EVERY QUARTER<br>YOU WAIT,<br>THE GAP<br><span class="accent">DOUBLES.</span></h2>
+    <p>The data isn't theoretical. Firms that attended HIGHLIGHTS Summit in 2023 were deploying AI-informed capital strategies within 90 days. Those that didn't are still in planning. The compounding effect of early intelligence is the most underpriced asset in finance.</p>
+  </div>
+  <div class="split-img">
+    <img src="6.jpg" alt="The Intelligence Gap" onerror="this.style.display='none';this.parentElement.style.background='#1a1a1a'">
+  </div>
+</div>
+
+<!-- URGENCY BANNER -->
+<div class="urgency-banner">
+  <div class="urgency-left">
+    <div class="urgency-dot"></div>
+    <div class="urgency-text">SEATS REMAINING AT CURRENT PRICE</div>
+  </div>
+  <div class="urgency-seats">137 <span>Tickets Left</span></div>
+  <a href="#tickets" class="btn" style="flex-shrink:0;">Lock In Your Price</a>
+</div>
+
+<!-- WHO'S IN THE ROOM -->
+<section id="who">
+  <span class="label">03 — Who's In The Room</span>
+  <h2 style="font-size:clamp(44px,6vw,88px);line-height:.92;max-width:900px;margin-bottom:60px;">THE PEOPLE<br>BUILDING THE<br>PLAYBOOK ARE<br><span style="color:var(--green)">ALL HERE.</span></h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-card-num">01</div>
+      <h3>Capital Allocators</h3>
+      <p>VCs, PEs, and sovereign wealth managers who are already deploying into AI-first fintech. They don't publish their thesis. They share it in rooms like this one. €4B+ of capital is attending — come find out where it's going.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-num">02</div>
+      <h3>AI-Native Operators</h3>
+      <p>The founders and product leads running the companies behind the data. They're not presenting case studies — they're reporting live results. The firms delivering 4× ROIC are sending their teams. Learn directly from the source.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-num">03</div>
+      <h3>Market Intelligence</h3>
+      <p>The analysts, strategists, and regulators who see the full picture before it becomes public knowledge. The data on these slides came from somewhere. At HIGHLIGHTS Summit, you get it first-hand — before it's consensus.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <span class="label">04 — The Agenda</span>
+  <h2 style="font-size:clamp(40px,5vw,72px);font-weight:900;line-height:.92;margin-bottom:48px;">TWO DAYS OF<br>INTEL YOU<br>CAN'T GET<br>ELSEWHERE.</h2>
+  <div class="agenda-list">
+    <div class="agenda-item">
+      <span class="agenda-time">09:00</span>
+      <span class="agenda-title">State of European Fintech Capital — Live Data Briefing</span>
+      <span class="agenda-tag">Data</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">10:30</span>
+      <span class="agenda-title">AI in Finance: Where The 4× Firms Are Putting It To Work</span>
+      <span class="agenda-tag">AI</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">12:00</span>
+      <span class="agenda-title">The Closed Deals Room — Capital Meets Operators. No Press.</span>
+      <span class="agenda-tag">Closed</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">14:00</span>
+      <span class="agenda-title">Nordic-Eurozone Capital Flows — The Numbers Behind The Corridor</span>
+      <span class="agenda-tag">Markets</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">16:00</span>
+      <span class="agenda-title">The Intelligence Edge — How To Compound What You Learn Here</span>
+      <span class="agenda-tag">Strategy</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">18:30</span>
+      <span class="agenda-title">Summit Evening — The Deals Don't Stop At Dinner</span>
+      <span class="agenda-tag">Evening</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOMO CALLOUT 2 -->
+<div class="fomo-strip" style="background:var(--black);border-top:1px solid #222;">
+  <h2 style="color:var(--green);">78% OF YOUR<br>PEERS FEEL<br>BEHIND ON AI.<br><span style="color:#f7f7f7;">FIX THAT HERE.</span></h2>
+  <div class="fomo-right">
+    <p style="color:#aaa;">The data is clear: the firms closing the intelligence gap fastest are the ones in the room. Two days at HIGHLIGHTS Summit is the highest-ROI learning investment in European fintech. The numbers say so. We're just showing you the numbers.</p>
+    <a href="#tickets" class="btn" style="margin-top:4px;">Get Your Ticket</a>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<section id="tickets">
+  <span class="cta-pre">The Data Is In. Your Move.</span>
+  <h2>KNOW MORE.<br>CLOSE MORE.<br><span class="accent">MISS NOTHING.</span></h2>
+  <p class="cta-sub">Every chart on this page represents a gap. A gap in capital. A gap in AI strategy. A gap in market intelligence. HIGHLIGHTS Summit is how you close it. 137 seats remain.</p>
+  <a href="#" class="btn-cta">Secure Your Seat Now</a>
+  <p class="cta-urgency"><span class="blink">●</span>&nbsp; 137 tickets remaining — price increases in 6 days</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">HIGHLIGHTS</div>
+  <div class="copy">HELSINKI · MAY 20–21, 2025 · © HIGHLIGHTS 2025</div>
+</footer>
+
+<script>
+// ─── CHART DEFAULTS ───────────────────────────────────────────────
+Chart.defaults.color = '#aaa';
+Chart.defaults.font.family = "'Barlow Condensed', sans-serif";
+Chart.defaults.font.weight = '900';
+Chart.defaults.font.size = 12;
+
+const GREEN = '#00ff99';
+const GREEN_DIM = 'rgba(0,255,153,0.15)';
+const GREEN_MID = 'rgba(0,255,153,0.5)';
+const WHITE = '#f7f7f7';
+const GREY = '#333';
+const GREY2 = '#222';
+
+const gridOpts = {
+  color: '#222',
+  lineWidth: 1,
+};
+const tickOpts = {
+  color: '#666',
+  font: { family: "'Barlow Condensed', sans-serif", weight: '900', size: 11 },
+  letterSpacing: 2,
+};
+
+// ─── 1. CAPITAL FLOWS BAR ─────────────────────────────────────────
+new Chart(document.getElementById('capitalChart'), {
+  type: 'bar',
+  data: {
+    labels: ['2019','2020','2021','2022','2023','2024','2025E'],
+    datasets: [{
+      label: 'Capital Deployed (€B)',
+      data: [28, 34, 61, 78, 142, 198, 267],
+      backgroundColor: [GREY, GREY, GREY, GREY, GREEN_MID, GREEN_MID, GREEN],
+      borderColor: 'transparent',
+      borderRadius: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#111',
+        borderColor: GREEN,
+        borderWidth: 1,
+        titleColor: GREEN,
+        bodyColor: WHITE,
+        callbacks: { label: ctx => ` €${ctx.raw}B` }
+      }
+    },
+    scales: {
+      x: { grid: gridOpts, ticks: tickOpts, border: { color: GREY } },
+      y: {
+        grid: gridOpts, ticks: { ...tickOpts, callback: v => `€${v}B` },
+        border: { color: GREY }
+      }
+    }
+  }
+});
+
+// ─── 2. NORDIC vs EUROZONE LINE ───────────────────────────────────
+new Chart(document.getElementById('nordicChart'), {
+  type: 'line',
+  data: {
+    labels: ['2020','2021','2022','2023','2024'],
+    datasets: [
+      {
+        label: 'Nordic Fintech',
+        data: [210, 340, 510, 740, 1080],
+        borderColor: GREEN,
+        backgroundColor: GREEN_DIM,
+        borderWidth: 2.5,
+        pointBackgroundColor: GREEN,
+        pointRadius: 4,
+        tension: 0.3,
+        fill: true,
+      },
+      {
+        label: 'EU Average',
+        data: [310, 420, 490, 590, 690],
+        borderColor: '#555',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        borderDash: [6, 4],
+        pointBackgroundColor: '#555',
+        pointRadius: 3,
+        tension: 0.3,
+        fill: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: { color: '#aaa', font: { family: "'Barlow Condensed', sans-serif", weight: '900', size: 11 }, usePointStyle: true, pointStyleWidth: 12 }
+      },
+      tooltip: {
+        backgroundColor: '#111', borderColor: GREEN, borderWidth: 1,
+        titleColor: GREEN, bodyColor: WHITE,
+      }
+    },
+    scales: {
+      x: { grid: gridOpts, ticks: tickOpts, border: { color: GREY } },
+      y: { grid: gridOpts, ticks: tickOpts, border: { color: GREY } }
+    }
+  }
+});
+
+// ─── 3. SECTOR DONUT ─────────────────────────────────────────────
+new Chart(document.getElementById('sectorChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['AI Infrastructure','Payments','Wealthtech','Lending','Compliance Tech','Other'],
+    datasets: [{
+      data: [34, 27, 18, 11, 7, 3],
+      backgroundColor: [GREEN, '#00cc7a', '#009955', GREY, '#444', '#2a2a2a'],
+      borderColor: '#111',
+      borderWidth: 3,
+      hoverBorderColor: GREEN,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+          color: '#aaa',
+          font: { family: "'Barlow Condensed', sans-serif", weight: '900', size: 11 },
+          usePointStyle: true,
+          pointStyleWidth: 10,
+          padding: 14,
+        }
+      },
+      tooltip: {
+        backgroundColor: '#111', borderColor: GREEN, borderWidth: 1,
+        titleColor: GREEN, bodyColor: WHITE,
+        callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}%` }
+      }
+    }
+  }
+});
+
+// ─── 4. AI ADOPTION MULTI-LINE ────────────────────────────────────
+new Chart(document.getElementById('aiAdoptionChart'), {
+  type: 'line',
+  data: {
+    labels: ['2021','2022','2023','2024','2025E'],
+    datasets: [
+      {
+        label: 'Risk & Compliance',
+        data: [14, 28, 49, 71, 89],
+        borderColor: GREEN,
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointBackgroundColor: GREEN,
+        pointRadius: 4,
+        tension: 0.3,
+      },
+      {
+        label: 'Credit Decisioning',
+        data: [11, 22, 38, 58, 76],
+        borderColor: '#00cc7a',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointBackgroundColor: '#00cc7a',
+        pointRadius: 3,
+        tension: 0.3,
+      },
+      {
+        label: 'Customer Ops',
+        data: [19, 31, 44, 59, 71],
+        borderColor: '#555',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        borderDash: [6, 3],
+        pointBackgroundColor: '#555',
+        pointRadius: 3,
+        tension: 0.3,
+      },
+      {
+        label: 'Trading & Execution',
+        data: [8, 14, 26, 44, 63],
+        borderColor: '#888',
+        backgroundColor: 'transparent',
+        borderWidth: 1.5,
+        borderDash: [3, 4],
+        pointBackgroundColor: '#888',
+        pointRadius: 3,
+        tension: 0.3,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: { color: '#aaa', font: { family: "'Barlow Condensed', sans-serif", weight: '900', size: 11 }, usePointStyle: true, pointStyleWidth: 12 }
+      },
+      tooltip: {
+        backgroundColor: '#111', borderColor: GREEN, borderWidth: 1,
+        titleColor: GREEN, bodyColor: WHITE,
+        callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}%` }
+      }
+    },
+    scales: {
+      x: { grid: gridOpts, ticks: tickOpts, border: { color: GREY } },
+      y: {
+        grid: gridOpts, ticks: { ...tickOpts, callback: v => `${v}%` },
+        border: { color: GREY }, max: 100
+      }
+    }
+  }
+});
+
+// ─── 5. AI ROIC GAP LINE ──────────────────────────────────────────
+new Chart(document.getElementById('aiRoicChart'), {
+  type: 'line',
+  data: {
+    labels: ['2020','2021','2022','2023','2024','2025E'],
+    datasets: [
+      {
+        label: 'AI-Native Firms',
+        data: [100, 124, 172, 248, 358, 510],
+        borderColor: GREEN,
+        backgroundColor: GREEN_DIM,
+        borderWidth: 2.5,
+        pointBackgroundColor: GREEN,
+        pointRadius: 4,
+        tension: 0.3,
+        fill: true,
+      },
+      {
+        label: 'Legacy Firms',
+        data: [100, 108, 116, 122, 130, 138],
+        borderColor: '#444',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        borderDash: [6, 4],
+        pointBackgroundColor: '#444',
+        pointRadius: 3,
+        tension: 0.3,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: { color: '#aaa', font: { family: "'Barlow Condensed', sans-serif", weight: '900', size: 11 }, usePointStyle: true }
+      },
+      tooltip: {
+        backgroundColor: '#111', borderColor: GREEN, borderWidth: 1,
+        titleColor: GREEN, bodyColor: WHITE,
+        callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} (indexed)` }
+      }
+    },
+    scales: {
+      x: { grid: gridOpts, ticks: tickOpts, border: { color: GREY } },
+      y: { grid: gridOpts, ticks: tickOpts, border: { color: GREY } }
+    }
+  }
+});
+
+// ─── 6. AI BUDGET HORIZONTAL BAR ─────────────────────────────────
+new Chart(document.getElementById('aiBudgetChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Risk & Compliance','Credit AI','Customer Ops AI','Trading Systems','Fraud Detection','Data Infrastructure'],
+    datasets: [{
+      label: '€M Planned 2025',
+      data: [4200, 3100, 2800, 2400, 1900, 1600],
+      backgroundColor: [GREEN, GREEN_MID, GREEN_MID, GREY, GREY, GREY2],
+      borderColor: 'transparent',
+      borderRadius: 0,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#111', borderColor: GREEN, borderWidth: 1,
+        titleColor: GREEN, bodyColor: WHITE,
+        callbacks: { label: ctx => ` €${ctx.raw.toLocaleString()}M` }
+      }
+    },
+    scales: {
+      x: {
+        grid: gridOpts,
+        ticks: { ...tickOpts, callback: v => `€${(v/1000).toFixed(0)}B` },
+        border: { color: GREY }
+      },
+      y: { grid: { display: false }, ticks: { ...tickOpts, color: '#aaa' }, border: { color: GREY } }
+    }
+  }
+});
+</script>
+</body>
+</html>
