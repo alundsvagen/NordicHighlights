@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE EUROZONE — HIGHLIGHTS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,800;0,900;1,900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black:#111;
+  --grey-bg:#f7f7f7;
+  --grey-dark:#e2e2e2;
+  --grey-mid:#d0d0d0;
+  --grey-light:#888;
+  --green:#00ff99;
+  --font:'Barlow Condensed',sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--grey-bg);
+  color:var(--black);
+  font-family:var(--font);
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+
+/* TICKER */
+.ticker-wrap{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:200;
+  background:var(--black);
+  height:34px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+}
+.ticker-track{
+  display:flex;
+  animation:ticker 20s linear infinite;
+  white-space:nowrap;
+}
+.ticker-track span{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.2em;
+  color:#f7f7f7;
+  padding:0 40px;
+}
+.ticker-track span.dot{color:var(--green);padding:0;}
+@keyframes ticker{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:34px;left:0;right:0;
+  padding:20px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(247,247,247,.96);
+  border-bottom:1px solid var(--grey-dark);
+  z-index:100;
+}
+nav a{color:var(--black);text-decoration:none;font-weight:900;}
+.nav-links{display:flex;gap:32px;align-items:center;}
+.nav-links a{font-size:13px;letter-spacing:.15em;opacity:.5;transition:opacity .15s;}
+.nav-links a:hover{opacity:1;}
+.nav-cta{background:var(--green);padding:10px 20px;opacity:1!important;}
+
+/* SECTIONS */
+section{padding:120px 48px;border-bottom:1px solid var(--grey-dark);}
+h1,h2{font-weight:900;line-height:.9;}
+.label{font-size:11px;letter-spacing:.2em;margin-bottom:16px;display:block;color:var(--black);}
+
+/* HERO */
+#hero{
+  position:relative;
+  min-height:100vh;
+  margin-top:74px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:80px 48px 60px;
+}
+.hero-img{
+  position:absolute;
+  inset:0;
+  z-index:0;
+}
+.hero-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(.38);
+}
+.hero-img-fallback{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,#111,#2a2a2a);
+}
+.hero-content{position:relative;z-index:2;}
+.hero-eyebrow{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.3em;
+  color:rgba(247,247,247,.5);
+  margin-bottom:20px;
+  display:block;
+  animation:fadeUp .6s ease both;
+}
+#hero h1{
+  font-size:clamp(68px,11vw,180px);
+  color:#f7f7f7;
+  animation:fadeUp .7s ease both .1s;
+}
+#hero h1 .accent{color:var(--green);}
+.hero-sub-row{
+  margin-top:32px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:40px;
+  flex-wrap:wrap;
+  animation:fadeUp .7s ease both .22s;
+}
+.hero-desc{
+  font-size:17px;
+  font-weight:800;
+  line-height:1.5;
+  color:rgba(247,247,247,.7);
+  max-width:500px;
+  text-transform:none;
+  letter-spacing:0;
+}
+.hero-meta{text-align:right;flex-shrink:0;}
+.hero-meta .date{font-size:20px;font-weight:900;letter-spacing:.1em;color:#f7f7f7;}
+.hero-meta .location{font-size:12px;font-weight:900;letter-spacing:.2em;color:rgba(247,247,247,.4);margin-top:4px;}
+.hero-cta-row{
+  margin-top:36px;
+  display:flex;
+  gap:16px;
+  align-items:center;
+  flex-wrap:wrap;
+  animation:fadeUp .7s ease both .34s;
+}
+.btn{
+  display:inline-block;
+  background:var(--green);
+  padding:16px 32px;
+  font-weight:900;
+  text-decoration:none;
+  color:var(--black);
+  transition:opacity .15s;
+}
+.btn:hover{opacity:.85;}
+.btn-outline{
+  display:inline-block;
+  border:2px solid rgba(247,247,247,.35);
+  padding:14px 28px;
+  font-weight:900;
+  text-decoration:none;
+  color:#f7f7f7;
+  transition:border-color .15s;
+}
+.btn-outline:hover{border-color:#f7f7f7;}
+.seats-left{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.15em;
+  color:rgba(247,247,247,.4);
+}
+.blink{animation:blink 1.2s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* STAT STRIP */
+.stat-strip{
+  background:var(--black);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.stat-item{
+  padding:40px 48px;
+  border-right:1px solid #333;
+}
+.stat-item:last-child{border-right:none;}
+.stat-num{
+  font-size:clamp(40px,5vw,72px);
+  font-weight:900;
+  line-height:1;
+  color:var(--green);
+}
+.stat-label{
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.2em;
+  color:#aaa;
+  margin-top:8px;
+}
+
+/* STORY / MANIFESTO */
+#story{background:var(--grey-bg);}
+.story-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:start;
+}
+.story-grid h2{font-size:clamp(44px,6vw,88px);line-height:.9;}
+.story-right{padding-top:8px;}
+.story-block{margin-bottom:36px;}
+.story-block h3{font-size:28px;margin-bottom:10px;}
+.story-block p{text-transform:none;color:var(--grey-light);line-height:1.6;letter-spacing:0;font-size:16px;}
+.story-block p.big{
+  text-transform:uppercase;
+  color:var(--black);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:.02em;
+  line-height:1.2;
+}
+
+/* WHO */
+#who{}
+.who-headline{
+  font-size:clamp(40px,6vw,88px);
+  font-weight:900;
+  line-height:.92;
+  max-width:900px;
+  margin-bottom:60px;
+}
+.who-headline .accent{color:var(--green);}
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.who-card{
+  background:#ebebeb;
+  padding:48px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.who-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:3px;height:0;
+  background:var(--green);
+  transition:height .4s ease;
+}
+.who-card:hover::before{height:100%;}
+.who-card-num{
+  font-size:56px;
+  font-weight:900;
+  color:var(--grey-dark);
+  line-height:1;
+  margin-bottom:14px;
+}
+.who-card h3{font-size:26px;font-weight:900;margin-bottom:12px;}
+.who-card p{text-transform:none;color:var(--grey-light);line-height:1.6;letter-spacing:0;font-size:15px;}
+
+/* SPLIT IMAGE + TEXT BLOCK */
+.split-block{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:500px;
+  border-bottom:1px solid var(--grey-dark);
+}
+.split-block.reverse{direction:rtl;}
+.split-block.reverse > *{direction:ltr;}
+.split-img{
+  overflow:hidden;
+  position:relative;
+}
+.split-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(.72);
+  transition:transform .6s ease;
+}
+.split-img:hover img{transform:scale(1.03);}
+.split-text{
+  background:var(--black);
+  padding:80px 64px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.split-text .label{color:#aaa;}
+.split-text h2{
+  font-size:clamp(40px,4.5vw,72px);
+  font-weight:900;
+  line-height:.92;
+  color:#f7f7f7;
+  margin-bottom:28px;
+}
+.split-text h2 .accent{color:var(--green);}
+.split-text p{
+  text-transform:none;
+  letter-spacing:0;
+  font-size:16px;
+  font-weight:800;
+  color:#999;
+  line-height:1.6;
+  max-width:420px;
+}
+
+/* SOCIAL PROOF */
+#social-proof{background:var(--grey-bg);}
+.proof-headline{
+  font-size:clamp(40px,5.5vw,80px);
+  font-weight:900;
+  line-height:.92;
+  max-width:800px;
+  margin-bottom:60px;
+}
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.testimonial{background:#ebebeb;padding:48px 40px;}
+.testimonial blockquote{
+  text-transform:none;
+  letter-spacing:0;
+  font-size:17px;
+  font-weight:800;
+  line-height:1.55;
+  color:var(--black);
+  margin-bottom:20px;
+}
+.testimonial .author{font-size:12px;color:var(--grey-light);margin-top:4px;}
+.testimonial .author-name{font-size:14px;font-weight:900;color:var(--black);}
+
+/* AGENDA */
+#agenda{}
+.agenda-headline{
+  font-size:clamp(40px,5vw,72px);
+  font-weight:900;
+  line-height:.92;
+  margin-bottom:48px;
+}
+.agenda-list{border-top:2px solid var(--black);}
+.agenda-item{
+  display:grid;
+  grid-template-columns:110px 1fr auto;
+  gap:32px;
+  align-items:center;
+  padding:24px 0;
+  border-bottom:1px solid var(--grey-dark);
+}
+.agenda-time{font-size:13px;font-weight:900;letter-spacing:.15em;color:var(--grey-light);}
+.agenda-title{font-size:20px;font-weight:900;}
+.agenda-tag{
+  font-size:11px;font-weight:900;letter-spacing:.2em;
+  background:var(--black);color:var(--green);
+  padding:6px 14px;white-space:nowrap;
+}
+
+/* FINAL CTA */
+#tickets{
+  background:var(--black);
+  color:#f7f7f7;
+  text-align:center;
+  padding:140px 48px;
+  border:none;
+}
+.cta-pre{
+  font-size:12px;font-weight:900;letter-spacing:.35em;
+  color:#aaa;margin-bottom:28px;display:block;
+}
+#tickets h2{
+  font-size:clamp(56px,9vw,150px);
+  line-height:.88;
+  max-width:1100px;
+  margin:0 auto 20px;
+}
+#tickets h2 .accent{color:var(--green);}
+.cta-sub{
+  font-size:16px;
+  text-transform:none;
+  letter-spacing:0;
+  color:#999;
+  margin:0 auto 52px;
+  max-width:480px;
+  line-height:1.6;
+  font-weight:800;
+}
+.btn-cta{
+  display:inline-block;
+  background:var(--green);
+  color:var(--black);
+  padding:20px 56px;
+  font-size:18px;
+  font-weight:900;
+  text-decoration:none;
+  letter-spacing:.1em;
+  transition:opacity .15s;
+}
+.btn-cta:hover{opacity:.85;}
+.urgency{
+  margin-top:32px;
+  font-size:12px;font-weight:900;letter-spacing:.2em;color:#aaa;
+}
+
+/* FOOTER */
+footer{
+  background:var(--black);
+  padding:36px 48px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid #333;
+}
+footer .logo{font-size:18px;font-weight:900;letter-spacing:.1em;color:#f7f7f7;}
+footer .copy{font-size:11px;font-weight:900;letter-spacing:.2em;color:#777;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:960px){
+  nav{padding:16px 24px;}
+  section{padding:72px 24px;}
+  #hero{padding:60px 24px 48px;}
+  .story-grid{grid-template-columns:1fr;gap:40px;}
+  .who-grid{grid-template-columns:1fr;}
+  .testimonials{grid-template-columns:1fr;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+  .stat-item{border-bottom:1px solid #1e1e1e;}
+  .agenda-item{grid-template-columns:1fr;gap:8px;padding:20px 0;}
+  .split-block{grid-template-columns:1fr;}
+  .split-block.reverse{direction:ltr;}
+  .split-text{padding:60px 24px;}
+  #tickets{padding:80px 24px;}
+  footer{flex-direction:column;gap:12px;padding:28px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>THE EUROZONE · HIGHLIGHTS SUMMIT 2025</span><span class="dot">·</span>
+    <span>NORDICS MEET EUROPE</span><span class="dot">·</span>
+    <span>HELSINKI — MAY 20–21, 2025</span><span class="dot">·</span>
+    <span>THE BRIDGE BETWEEN TWO MARKETS</span><span class="dot">·</span>
+    <span>137 SEATS LEFT</span><span class="dot">·</span>
+    <span>€ MEETS €€ HERE</span><span class="dot">·</span>
+    <span>WHERE THE DEAL FLOW CROSSES BORDERS</span><span class="dot">·</span>
+    <span>THE EUROZONE · HIGHLIGHTS SUMMIT 2025</span><span class="dot">·</span>
+    <span>NORDICS MEET EUROPE</span><span class="dot">·</span>
+    <span>HELSINKI — MAY 20–21, 2025</span><span class="dot">·</span>
+    <span>THE BRIDGE BETWEEN TWO MARKETS</span><span class="dot">·</span>
+    <span>137 SEATS LEFT</span><span class="dot">·</span>
+    <span>€ MEETS €€ HERE</span><span class="dot">·</span>
+    <span>WHERE THE DEAL FLOW CROSSES BORDERS</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" style="font-size:20px;letter-spacing:.1em;">HIGHLIGHTS</a>
+  <div class="nav-links">
+    <a href="#who">Who's In</a>
+    <a href="#social-proof">Proof</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#tickets" class="nav-cta">Get Tickets</a>
+  </div>
+</nav>
+
+<!-- HERO — 3.jpg splash -->
+<section id="hero">
+  <div class="hero-img">
+    <img src="3.jpg" alt="The EuroZONE Summit" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=hero-img-fallback></div>'">
+  </div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">HELSINKI · MAY 20–21, 2025 · Where Two Economies Become One Opportunity</span>
+    <h1>THE<br>BRIDGE<br>IS<br><span class="accent">OPEN.</span></h1>
+    <div class="hero-sub-row">
+      <p class="hero-desc">The Nordics are innovating at speed. The Eurozone has the scale. HIGHLIGHTS Summit is where both sides of that equation finally sit in the same room — and make something happen.</p>
+      <div class="hero-meta">
+        <div class="date">MAY 20–21, 2025</div>
+        <div class="location">HELSINKI, FINLAND</div>
+      </div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#tickets" class="btn">Claim Your Seat</a>
+      <a href="#who" class="btn-outline">See Who's Crossing Over</a>
+      <span class="seats-left"><span class="blink">●</span>&nbsp; 137 seats remaining</span>
+    </div>
+  </div>
+</section>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-item">
+    <div class="stat-num">2,000+</div>
+    <div class="stat-label">Attendees From Both Sides</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">€4B+</div>
+    <div class="stat-label">Capital Crossing Borders</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">27+</div>
+    <div class="stat-label">Eurozone Markets Represented</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">1</div>
+    <div class="stat-label">Room Where It All Connects</div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section id="story">
+  <span class="label">00 — The Gap Nobody Is Filling</span>
+  <div class="story-grid">
+    <div>
+      <h2>TWO<br>POWERHOUSE<br>ECONOMIES.<br>BARELY<br><span style="color:var(--green)">TALKING.</span></h2>
+    </div>
+    <div class="story-right">
+      <div class="story-block">
+        <p class="big">The Nordics built some of the world's most advanced fintech. The Eurozone built the world's largest single market. So why are they still talking past each other?</p>
+      </div>
+      <div class="story-block">
+        <p>Nordic operators don't have a capital problem. They have an access problem — access to the distribution, regulatory frameworks, and institutional networks that turn great fintech into continent-scale businesses.</p>
+      </div>
+      <div class="story-block">
+        <p>Eurozone investors don't have a deal flow problem. They have a discovery problem — the best-performing, fastest-growing fintechs in Europe are being built north of the Baltic and most of them never hear about it.</p>
+      </div>
+      <div class="story-block">
+        <p>HIGHLIGHTS Summit is where that changes. Helsinki sits at the crossroads. The EuroZONE is the room where the bridge gets built — deals get done, partnerships get formed, and capital finds the companies it's been looking for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO'S IN -->
+<section id="who">
+  <span class="label">01 — Who's In The Room</span>
+  <h2 class="who-headline">NORTH MEETS<br>SOUTH. EAST MEETS<br>WEST. EVERYONE<br><span class="accent">MEANS BUSINESS.</span></h2>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-card-num">01</div>
+      <h3>Nordic Operators</h3>
+      <p>The founders and operators who built Europe's most exciting fintech companies — from Stockholm to Helsinki to Oslo. They're here because the Eurozone is their next frontier, and the room is full of people who can take them there.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-num">02</div>
+      <h3>Eurozone Capital</h3>
+      <p>VCs, PEs, and institutional investors from Frankfurt, Paris, Amsterdam and beyond. They've been watching Nordic fintech outperform for years. Now they're here to get in front of it — before someone else does.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-num">03</div>
+      <h3>Cross-Border Builders</h3>
+      <p>Regulators, legal strategists, banking partners, and platform architects who understand what it actually takes to operate across the Nordic-Eurozone divide. The people who make expansion real, not theoretical.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT IMAGE BLOCK — 4.jpg left, text right -->
+<div class="split-block">
+  <div class="split-img">
+    <img src="4.jpg" alt="The EuroZONE Connection" onerror="this.style.display='none';this.parentElement.style.background='#1a1a1a'">
+  </div>
+  <div class="split-text">
+    <span class="label">The Corridor</span>
+    <h2>WHERE<br>NORDIC SPEED<br>MEETS <span class="accent">EURO</span><br>SCALE.</h2>
+    <p>The most valuable deals in European fintech aren't happening in London anymore. They're being structured right here — at the intersection of two economies that have spent too long operating in parallel instead of in partnership.</p>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<section id="social-proof">
+  <span class="label">02 — Don't Take Our Word For It</span>
+  <h2 class="proof-headline">THE PEOPLE<br>WHO CROSSED<br>OVER LAST YEAR<br>DIDN'T LOOK BACK.</h2>
+  <div class="testimonials">
+    <div class="testimonial">
+      <blockquote>"We'd been trying to break into the Eurozone for two years. We walked out of Helsinki with three serious partnerships and a Frankfurt office opening six months later. That's the HIGHLIGHTS effect."</blockquote>
+      <div class="author-name">Tobias Reinholt</div>
+      <div class="author">CEO, Stackr Financial — Stockholm</div>
+    </div>
+    <div class="testimonial">
+      <blockquote>"We'd been circling Nordic fintech from the outside for years. HIGHLIGHTS Summit put us in the room with founders we genuinely couldn't access any other way. The deal density is unlike anything else in Europe."</blockquote>
+      <div class="author-name">Sara Lindqvist</div>
+      <div class="author">Managing Partner, Nordic Ventures — Frankfurt</div>
+    </div>
+    <div class="testimonial">
+      <blockquote>"Half the room was Nordic. Half was Eurozone. The conversations in between were the most valuable two days I've had in finance in a decade. Helsinki is the junction. This is the train."</blockquote>
+      <div class="author-name">Arjun Mehta</div>
+      <div class="author">CIO, Paytral — Amsterdam</div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <span class="label">03 — The Agenda</span>
+  <h2 class="agenda-headline">TWO DAYS.<br>ONE CORRIDOR.</h2>
+  <div class="agenda-list">
+    <div class="agenda-item">
+      <span class="agenda-time">08:30</span>
+      <span class="agenda-title">Doors Open — The EuroZONE Is Live</span>
+      <span class="agenda-tag">Day 1</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">09:30</span>
+      <span class="agenda-title">Opening Keynote: The Nordic-Eurozone Opportunity — What Both Sides Are Getting Wrong</span>
+      <span class="agenda-tag">Keynote</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">11:00</span>
+      <span class="agenda-title">The Cross-Border Deals Room — No Press. No Spectators. Just Capital.</span>
+      <span class="agenda-tag">Closed</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">13:00</span>
+      <span class="agenda-title">The Corridor Lunch — Where The Two Sides Finally Meet</span>
+      <span class="agenda-tag">Network</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">15:00</span>
+      <span class="agenda-title">Regulation Across Borders — Operating in Both Markets Without Losing Your Mind</span>
+      <span class="agenda-tag">Panel</span>
+    </div>
+    <div class="agenda-item">
+      <span class="agenda-time">18:00</span>
+      <span class="agenda-title">The EuroZONE Party — The Bridge Stays Open After Dark</span>
+      <span class="agenda-tag">Evening</span>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="tickets">
+  <span class="cta-pre">The Corridor Closes Soon. Get In.</span>
+  <h2>BE IN THE<br><span class="accent">ZONE</span><br>OR WATCH<br>FROM OUTSIDE.</h2>
+  <p class="cta-sub">The Nordics and the Eurozone are finally converging — and the people brokering that convergence will be in Helsinki in May. The only question is whether you're one of them.</p>
+  <a href="#" class="btn-cta">Secure Your Place</a>
+  <p class="urgency"><span class="blink">●</span>&nbsp; 137 tickets remaining — price increases in 6 days</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">HIGHLIGHTS · THE EUROZONE</div>
+  <div class="copy">HELSINKI · MAY 20–21, 2025 · © HIGHLIGHTS 2025</div>
+</footer>
+
+</body>
+</html>
